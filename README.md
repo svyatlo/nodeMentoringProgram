@@ -1,7 +1,16 @@
 # nodeMentoringProgram
 
-### To run some task implementation please write:
-`npm run task1-1`, `npm run task1-2` or `npm run task1-3` and so on.
+1. Download/clone this repository to your local workstation.
+
+2. Open the folder with the project in your editor.
+
+3. Write `npm install` to install all dependences of the project.
+
+4. To run some task implementation please write: `npm run task*-**`,
+
+where * - number of the task, ** - number of the subtask.
+
+For example `npm run task1-1`
 
 ------
 ### To see the description of the task please follow the link:
