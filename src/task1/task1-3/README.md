@@ -2,7 +2,8 @@
 
 ## Task 1.3
 
-### Rewrite programs from the Task1-2 using [babel](https://babeljs.io/) and **ES6** modules:
+### Rewrite programs from the Task1-2 using [babel](https://babeljs.io/) and **ES6** modules
+
 - Read the content of **./csv** directory ([Example](http://epa.ms/nodejs19-hw1-ex1)).
 - Use the [**csvjson** package](https://github.com/Keyang/node-csvtojson) to convert **csv** file to **json** object.
 - Write the **csv** file content to a new **txt** file. Use the [following format](http://epa.ms/nodejs19-hw1-ex2).
@@ -13,4 +14,3 @@
 ## Evaluation criteria
 
 - Task 1.3 is fulfilled to the full extent.
-
