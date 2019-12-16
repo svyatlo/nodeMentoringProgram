@@ -12,7 +12,7 @@ app.set('port', port);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/persons', (req, res) => routs.get(req, res, persons));
+app.get('/persons', validator.response(schema.arraySchema), (req, res) => routs.get(req, res, persons));
 app.get('/persons/:id', validator.params(schema.idSchema), (req, res) => routs.getById(req, res, persons));
 app.put('/persons/:id', validator.params(schema.idSchema), (req, res) => routs.updateById(req, res, persons));
 app.post('/persons', validator.body(schema.objectSchema), (req, res) => routs.post(req, res, persons));
