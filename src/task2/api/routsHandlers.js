@@ -4,7 +4,7 @@ import { updateById } from './updateById';
 import { post } from './post';
 import { deleteById } from './deleteById';
 
-export const routs = {
+export const routsHandlers = {
   get,
   getById,
   updateById,
