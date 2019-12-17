@@ -1,6 +1,6 @@
 import persons from './exampleDB';
-import { routs } from './routs/routs';
-import { schema } from './routs/validationSchema';
+import { routs } from './api/routs';
+import { schema } from './api/validationSchema';
 
 const express = require('express');
 const app = express();
