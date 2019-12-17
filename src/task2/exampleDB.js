@@ -1,4 +1,4 @@
-module.exports = [
+export const persons = [
     {
         id: '1982c440-8318-48ed-955e-7d7b193eaf09',
         login: 'svyatlo',
