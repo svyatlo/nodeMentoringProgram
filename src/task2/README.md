@@ -1,6 +1,14 @@
 [Return to the main README.md](../../README.md)
 
-## Task 2
+# Task 2
+
+## How to run
+
+- To run task implementation please switch to the `task2` branch.
+- Write `npm install`, then `npm run task2`.
+- Then open Postman and try to send different requests, for example GET to `http://localhost:5000/persons`.
+
+## Prerequisites
 
 Install globally or locally npm package [nodemon](https://github.com/remy/nodemon), configure [babel](https://babeljs.io/) and [eslint](https://eslint.org/).
 Use the following [eslintconfig file](https://epa.ms/nodejs19-hw2-ex1).
