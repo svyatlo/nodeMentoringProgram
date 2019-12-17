@@ -5,7 +5,6 @@ const idSchema = Joi.object({
 });
 
 const objectSchema = Joi.object({
-    // id: Joi.string().pattern(new RegExp('[a-z0-9]{8}(-[a-z0-9]{4}){3}-[a-z0-9]{12}')).required(),
     login: Joi.string().required(),
     password: Joi.string().pattern(new RegExp('[a-zA-Z0-9]')).required(),
     age: Joi.number().integer().min(4).max(130).required(),
