@@ -1,6 +1,6 @@
 export function getById(req, res, database) {
     database.map((person) => {
-        if (req.params.id === person.id) {
+        if (req.params.id === person.id && !person.isDeleted) {
             return res.status(200).send({
                 success: 'true',
                 message: 'Person deleted successfully',

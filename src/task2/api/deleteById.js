@@ -1,6 +1,6 @@
 export function deleteById(req, res, database) {
     database.map((person) => {
-        if (req.params.id === person.id) {
+        if (req.params.id === person.id && !person.isDeleted) {
             person.isDeleted = true;
             return res.status(200).send({
                 success: 'true',

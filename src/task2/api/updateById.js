@@ -3,7 +3,7 @@ export function updateById(req, res, database) {
     let foundedPersonIndex = null;
 
     database.map((person, personIndex) => {
-        if (req.params.id === person.id) {
+        if (req.params.id === person.id && !person.isDeleted) {
             foundedPerson = person;
             foundedPersonIndex = personIndex;
         }
