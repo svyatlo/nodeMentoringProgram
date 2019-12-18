@@ -9,7 +9,7 @@
     "task1-1": "nodemon src/task1/task1-1",
     "task1-2": "nodemon src/task1/task1-2",
     "task1-3": "nodemon --exec babel-node src/task1/task1-3",
-    "task2": "nodemon --exec babel-node src/task2/server.js"
+    "task2": "npm run lint && nodemon --exec babel-node src/task2/server.js"
   },
   "repository": {
     "type": "git",

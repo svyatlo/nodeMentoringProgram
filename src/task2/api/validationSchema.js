@@ -17,4 +17,4 @@ export const schema = {
     idSchema,
     objectSchema,
     arraySchema
-}
+};

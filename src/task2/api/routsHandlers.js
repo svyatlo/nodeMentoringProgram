@@ -5,9 +5,9 @@ import { post } from './post';
 import { deleteById } from './deleteById';
 
 export const routsHandlers = {
-  get,
-  getById,
-  updateById,
-  post,
-  deleteById
-}
+    get,
+    getById,
+    updateById,
+    post,
+    deleteById
+};
