@@ -25,4 +25,7 @@ router.route('/persons/:id')
     .put((req, res) => routsHandlers.updateById(req, res, persons))
     .delete((req, res) => routsHandlers.deleteById(req, res, persons));
 
+router.route('/search')
+    .get((req, res) => routsHandlers.findByLogin(req, res));
+
 export default router;
