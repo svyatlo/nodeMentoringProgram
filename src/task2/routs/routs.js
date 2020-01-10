@@ -7,7 +7,7 @@ const router = express.Router();
 const validator = require('express-joi-validation').createValidator({});
 
 router.route('/users')
-    .get(validator.response(schema.arraySchema), (req, res) => {
+    .get((req, res) => {
         routsHandlers.get(req, res, routes);
     })
     .post(validator.body(schema.objectSchema), (req, res) => {
