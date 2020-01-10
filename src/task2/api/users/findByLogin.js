@@ -1,4 +1,4 @@
-import { getAutoSuggestUsers } from '../services/getAutoSuggestUsers';
+import { getAutoSuggestUsers } from '../../services/getAutoSuggestUsers';
 
 export function findByLogin(req, res) {
     const response = getAutoSuggestUsers(req.query.loginSubstring, req.query.limit);
