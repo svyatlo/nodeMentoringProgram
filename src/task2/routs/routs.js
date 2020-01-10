@@ -7,20 +7,15 @@ const router = express.Router();
 const validator = require('express-joi-validation').createValidator({});
 
 router.route('/users')
-    .get((req, res) => {
-        validator.response(schema.arraySchema);
+    .get(validator.response(schema.arraySchema), (req, res) => {
         routsHandlers.get(req, res, routes);
     })
-    .post((req, res) => {
-        validator.body(schema.objectSchema);
+    .post(validator.body(schema.objectSchema), (req, res) => {
         routsHandlers.post(req, res, routes);
     });
 
 router.route('/users/:id')
-    .all((req, res, next) => {
-        validator.params(schema.idSchema);
-        next();
-    })
+    .all(validator.params(schema.idSchema), (req, res, next) => next())
     .get((req, res) => routsHandlers.getById(req, res, routes))
     .put((req, res) => routsHandlers.updateById(req, res, routes))
     .delete((req, res) => routsHandlers.deleteById(req, res, routes));
