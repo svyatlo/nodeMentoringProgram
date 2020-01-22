@@ -1,6 +1,6 @@
 import routes from '../exampleDB';
-import { routsHandlers } from '../api/users/routsHandlers';
-import { schema } from '../api/users/validationSchema';
+import { routsHandlers } from '../data-access/user';
+import { schema } from '../data-access/validationSchema';
 
 const express = require('express');
 const router = express.Router();
