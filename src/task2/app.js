@@ -1,11 +1,11 @@
-import router from './routs/routs';
+import router from './routes/user';
 
-const db = require('./config/database');
+const sequelize = require('./config/database');
 const express = require('express');
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5003;
 
-db.authenticate()
+sequelize.authenticate()
     .then(() => console.log('Database connected...'))
     .catch(err => console.error('Unable to connect to the database: ', err));
 
