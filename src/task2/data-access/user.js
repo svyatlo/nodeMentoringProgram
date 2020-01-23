@@ -1,22 +1,18 @@
 import { getAutoSuggestUsers } from '../utils/getAutoSuggestUsers';
 import uuidv4 from 'uuid/v4';
-const User = require('../models/User');
-import sequelize from '../config/database';
+import { User } from '../models/User';
 
-function get(req, res, database) {
+function get(req, res) {
     if (req.query.loginSubstring && req.query.limit) {
         return findByLogin(req, res);
     }
 
     User.findAll()
-        .then(user => {
-            console.log('My users: ', user);
-            res.send(200);
+        .then((users) => {
+            console.log('My users: ', users);
+            res.status(200).send(users);
         })
         .catch(err => console.log('My error: ', err));
-
-    console.log(database);
-    // return res.status(200).send(database);
 }
 
 function findByLogin(req, res) {

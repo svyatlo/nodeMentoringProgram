@@ -1,16 +1,15 @@
-const Sequelize = require('sequelize');
+const { Sequelize } = require('sequelize');
 
-const sequelize = new Sequelize('nodeMP', 'postgres', '123456', {
+export const db = new Sequelize('nodeMP', 'postgres', '123456', {
     host: 'localhost',
-    port: 5000,
-    dialect: 'postgres'
+    dialect: 'postgres',
+    operatorsAliases: false,
+    pool: {
+        max: 5,
+        min: 0,
+        acquire: 30000,
+        idle: 10000
+    }
 });
 
-// const dialect = 'postgres';
-// const username = 'postgres';
-// const password = '123456';
-// const host = '127.0.0.1';
-// const port = 5000;
-// const database = 'nodeMP';
 // const sequelize = new Sequelize('postgres://postgres:123456@127.0.0.1:5000/nodeMP');
-module.exports = sequelize;
