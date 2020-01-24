@@ -1,54 +1,75 @@
-import { getAutoSuggestUsers } from '../utils/getAutoSuggestUsers';
 import uuidv4 from 'uuid/v4';
 import { User } from '../models/User';
+import { db } from '../config/database';
+
+const { Op } = require('sequelize');
 
 function get(req, res) {
     if (req.query.loginSubstring && req.query.limit) {
-        return findByLogin(req, res);
-    }
-
-    User.findAll()
-        .then((users) => {
-            console.log('My users: ', users);
-            res.status(200).send(users);
+        User.scope('active')
+        .findAll({
+            where: {
+                login: {
+                    [Op.substring]: req.query.loginSubstring
+                }
+            },
+            limit: req.query.limit,
+            order: [[db.col('login'), 'ASC']]
         })
-        .catch(err => console.log('My error: ', err));
-}
-
-function findByLogin(req, res) {
-    const response = getAutoSuggestUsers(req.query.loginSubstring, req.query.limit);
-
-    if (response) {
-        return res.status(200).send({
-            success: 'true',
-            response
-        });
+        .then((users) => {
+            if (users) {
+                res.status(200).send({
+                    success: 'true',
+                    users
+                });
+            } else {
+                res.status(404).send({
+                    success: 'false',
+                    message: 'Trere are not any person with this login'
+                });
+            }
+        })
     }
-
-    return res.status(404).send({
-        success: 'false',
-        message: 'Trere are not any person with this login'
-    });
+    else {
+        User.findAll()
+        .then((users) => {
+            if (users) {
+                res.status(200).send({
+                    success: 'true',
+                    users
+                });
+            } else {
+                res.status(404).send({
+                    success: 'false',
+                    message: 'Trere aren`t any person in database'
+                });
+            }
+        })
+        .catch(error => console.log('Error: ', error));
+    }
 }
 
-function getById(req, res, database) {
-    database.map((person) => {
-        if (req.params.id === person.id && !person.isDeleted) {
-            return res.status(200).send({
-                success: 'true',
-                message: 'Person deleted successfully',
-                person
+function getById(req, res) {
+    User.scope('active')
+    .findOne({
+        where: {
+            id: req.params.id
+        }
+    })
+    .then(user => {
+        if (user) {
+            res.status(200).send(user);
+        } else {
+            res.status(404).send({
+                success: 'false',
+                message: `User not found`
             });
         }
-    });
-
-    return res.status(404).send({
-        success: 'false',
-        message: 'Person not found'
-    });
+    })
+    .catch(error => console.log('Error: ', error));
 }
 
-function post(req, res, database) {
+function post(req, res) {
     const id = uuidv4();
     const person = {
         id,
@@ -58,65 +79,72 @@ function post(req, res, database) {
         isDeleted: req.body.isDeleted
     };
 
-    database.push(person);
+    User.create(person);
 
     return res.status(201).send({
         success: 'true',
-        message: 'person added successfully',
+        message: 'User added successfully',
         person
     });
 }
 
-function updateById(req, res, database) {
-    let foundedPerson = null;
-    let foundedPersonIndex = null;
-
-    database.map((person, personIndex) => {
-        if (req.params.id === person.id && !person.isDeleted) {
-            foundedPerson = person;
-            foundedPersonIndex = personIndex;
+function updateById(req, res) {
+    User.scope('active')
+    .findOne({
+        where: {
+            id: req.params.id
         }
-    });
-
-    if (!foundedPerson) {
-        return res.status(404).send({
-            success: 'false',
-            message: 'Person not found.'
-        });
-    }
-
-    const updatedPerson = {
-        id: foundedPerson.id,
-        login: req.body.login || foundedPerson.login,
-        password: req.body.password || foundedPerson.password,
-        age: req.body.age || foundedPerson.age,
-        isDeleted: req.body.isDeleted || foundedPerson.isDeleted
-    };
-
-    database.splice(foundedPersonIndex, 1, updatedPerson);
-
-    return res.status(201).send({
-        success: 'true',
-        message: 'person updated successfully',
-        updatedPerson
-    });
+    })
+    .then((user) => {
+        if (user) {
+            User.update({
+                login: req.body.login || user.login,
+                password: req.body.password || user.password,
+                age: req.body.age || user.age,
+                isDeleted: req.body.isDeleted || user.isDeleted,
+                updetedAt: new Date()
+            }, {
+                where: {
+                    id: req.params.id
+                }
+            })
+            .then(() => {
+                res.status(200).send({
+                    success: 'true',
+                    message: 'User updated successfully'
+                });
+            })
+        } else {
+            res.status(404).send({
+                success: 'false',
+                message: `User not found`
+            });
+        }
+    })
+    .catch(error => console.log('Error: ', error));
 }
 
-function deleteById(req, res, database) {
-    database.map((person) => {
-        if (req.params.id === person.id && !person.isDeleted) {
-            person.isDeleted = true;
-            return res.status(200).send({
+function deleteById(req, res) {
+    User.scope('active')
+    .update({ isDeleted: true }, {
+        where: {
+            id: req.params.id
+        }
+    })
+    .then(user => {
+        if (user) {
+            res.status(200).send({
                 success: 'true',
                 message: 'Person deleted successfully'
             });
+        } else {
+            res.status(404).send({
+                success: 'false',
+                message: `User not found`
+            });
         }
-    });
-
-    return res.status(404).send({
-        success: 'false',
-        message: 'Person not found'
-    });
+    })
+    .catch(error => console.log('Error: ', error));
 }
 
 export const routsHandlers = {
@@ -124,6 +152,5 @@ export const routsHandlers = {
     getById,
     updateById,
     post,
-    deleteById,
-    findByLogin
+    deleteById
 };

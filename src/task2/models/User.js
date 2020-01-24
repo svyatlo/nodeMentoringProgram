@@ -30,4 +30,12 @@ export const User = db.define('user', {
     updatedAt: {
         type: DataTypes.DATE
     }
+}, {
+    scopes: {
+        active: {
+            where: {
+                isDeleted: false
+            }
+        }
+    }
 });
