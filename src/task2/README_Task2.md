@@ -1,4 +1,5 @@
 [Return to the main README.md](../../README.md)
+[Return to the Task3](./README_Task3.md)
 
 # Task 2
 
@@ -7,9 +8,9 @@
 - To run task implementation please switch to the `task2` branch.
 - Write `npm install`, then `npm run task2`.
 - Then open Postman and try to send requests. Some examples:
-  - to get all persons: GET `http://localhost:5000/persons`;
-  - to get person by id: GET or DELETE or UPDATE `http://localhost:5000/persons/1982c440-8318-48ed-955e-7d7b193eaf09`;
-  - search by login: GET `http://localhost:5000/search?loginSubstring=svy&limit=3` (you will receive some results sorted by login) or `http://localhost:5000/search?loginSubstring=ghj&limit=3` (you will receive the error)
+  - to get all persons: GET `http://localhost:5000/users`;
+  - to get person by id: GET or DELETE or UPDATE `http://localhost:5000/users/1982c440-8318-48ed-955e-7d7b193eaf09`;
+  - search by login: GET `http://localhost:5000/users?loginSubstring=sve&limit=3` (you will receive some results sorted by login) or `http://localhost:5000/users?loginSubstring=ghj&limit=3` (you will receive the error)
 
 ## Prerequisites
 

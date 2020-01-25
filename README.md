@@ -21,4 +21,5 @@ For example `npm run task1-1`
 - Task 1
   - [Task1-1](./src/task1/task1-1/README.md), [Task1-2](./src/task1/task1-2/README.md), [Task1-3](./src/task1/task1-3/README.md)
 
-- [Task 2](./src/task2/README.md)
+- [Task 2](./src/task2/README_Task2.md)
+- [Task 3](./src/task2/README_Task3.md)
