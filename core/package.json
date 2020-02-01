@@ -1,0 +1,35 @@
+{
+  "name": "nodementoring-core",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "./node_modules/.bin/eslint task1/**/*.js --fix",
+    "task1-1": "nodemon task1/task1-1",
+    "task1-2": "nodemon task1/task1-2",
+    "task1-3": "nodemon --exec babel-node task1/task1-3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/svyatlo/nodeMentoringProgram.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/svyatlo/nodeMentoringProgram/issues"
+  },
+  "homepage": "https://github.com/svyatlo/nodeMentoringProgram#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.7.4",
+    "@babel/core": "^7.7.4",
+    "@babel/node": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.7.2",
+    "nodemon": "^1.19.4"
+  },
+  "dependencies": {
+    "csvtojson": "^2.0.10"
+  }
+}
