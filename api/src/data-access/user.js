@@ -146,7 +146,7 @@ function deleteById(req, res) {
         .catch(error => console.log('Error: ', error));
 }
 
-export const routsHandlers = {
+export const routeHandlers = {
     get,
     getById,
     updateById,
