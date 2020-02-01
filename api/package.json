@@ -1,16 +1,11 @@
 {
-  "name": "nodementoring",
+  "name": "nodementoring-api",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "./node_modules/.bin/eslint src/**/*.js --fix",
-    "task1-1": "nodemon src/task1/task1-1",
-    "task1-2": "nodemon src/task1/task1-2",
-    "task1-3": "nodemon --exec babel-node src/task1/task1-3",
-    "task2": "nodemon --exec babel-node src/task2/app.js",
-    "task3": "nodemon --exec babel-node src/task3/app.js"
+    "start": "nodemon --exec babel-node src/app.js"
   },
   "repository": {
     "type": "git",
@@ -34,7 +29,6 @@
   },
   "dependencies": {
     "@hapi/joi": "^16.1.8",
-    "csvtojson": "^2.0.10",
     "express": "^4.17.1",
     "express-joi-validation": "^4.0.3",
     "pg": "^7.17.1",
