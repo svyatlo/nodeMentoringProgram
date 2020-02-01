@@ -17,7 +17,7 @@ function get(req, res) {
                 order: [[db.col('login'), 'ASC']]
             })
             .then((users) => {
-                if (users) {
+                if (users.length) {
                     res.status(200).send({
                         success: 'true',
                         users
@@ -25,7 +25,7 @@ function get(req, res) {
                 } else {
                     res.status(404).send({
                         success: 'false',
-                        message: 'Trere are not any person with this login'
+                        message: 'Trere are not any person with the login'
                     });
                 }
             });
