@@ -1,4 +1,3 @@
-import uuidv4 from 'uuid/v4';
 import { User } from '../models/User';
 import { db } from '../config/database';
 
