@@ -34,7 +34,7 @@ function findUserById(id) {
 }
 
 function createUser(user) {
-    return User.create(user);
+    User.create(user);
 }
 
 function updateUserById(user) {
