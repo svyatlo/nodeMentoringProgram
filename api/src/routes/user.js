@@ -1,4 +1,4 @@
-import { routsHandlers } from '../data-access/user';
+import { controllers } from '../controllers/user';
 import { schema } from '../data-access/validationSchema';
 
 const express = require('express');
@@ -7,16 +7,16 @@ const validator = require('express-joi-validation').createValidator({});
 
 router.route('/users')
     .get((req, res) => {
-        routsHandlers.get(req, res);
+        controllers.getUsers(req, res);
     })
     .post(validator.body(schema.objectSchema), (req, res) => {
-        routsHandlers.post(req, res);
+        controllers.postUser(req, res);
     });
 
 router.route('/users/:id')
     .all(validator.params(schema.idSchema), (req, res, next) => next())
-    .get((req, res) => routsHandlers.getById(req, res))
-    .put((req, res) => routsHandlers.updateById(req, res))
-    .delete((req, res) => routsHandlers.deleteById(req, res));
+    .get((req, res) => controllers.getUserById(req, res))
+    .put((req, res) => controllers.updateUserById(req, res))
+    .delete((req, res) => controllers.deleteUserById(req, res));
 
 export default router;

@@ -20,7 +20,7 @@ The table `user` with predefined users will be created.
 To check it refresh the page, follow **NodeMP > Schemas > Tables**. To check if it fullfilled click the right button on the table `user` and select **View/Edit Data > All Rows**
 
 - Run the task `npm run task2`.
-- Open Postman and try to send requests the same way as in the [Task2](./README_Task2.md).
+- Open Postman and try to send requests the same way as in the `Task2`.
 
 ### Task 3.1
 

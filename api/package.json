@@ -1,0 +1,39 @@
+{
+  "name": "nodementoring-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "./node_modules/.bin/eslint src/**/*.js --fix",
+    "start": "nodemon --exec babel-node src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/svyatlo/nodeMentoringProgram.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/svyatlo/nodeMentoringProgram/issues"
+  },
+  "homepage": "https://github.com/svyatlo/nodeMentoringProgram#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.7.4",
+    "@babel/core": "^7.7.4",
+    "@babel/node": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.7.2",
+    "nodemon": "^1.19.4"
+  },
+  "dependencies": {
+    "@hapi/joi": "^16.1.8",
+    "express": "^4.17.1",
+    "express-joi-validation": "^4.0.3",
+    "pg": "^7.17.1",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^5.21.3",
+    "uuid": "^3.3.3"
+  }
+}
