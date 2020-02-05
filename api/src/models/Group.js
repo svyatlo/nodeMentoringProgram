@@ -2,40 +2,25 @@ import { db } from '../config/database';
 
 const { DataTypes } = require('sequelize');
 
-export const User = db.define('user', {
+export const Group = db.define('group', {
     id: {
         type: DataTypes.UUID,
         allowNull: false,
         primaryKey: true
     },
-    login: {
+    name: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    password: {
-        type: DataTypes.STRING,
+    permissions: {
+        type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: false
     },
-    age: {
-        type: DataTypes.NUMBER,
-        allowNull: false
-    },
-    isDeleted: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false
-    },
+    
     createdAt: {
         type: DataTypes.DATE
     },
     updatedAt: {
         type: DataTypes.DATE
-    }
-}, {
-    scopes: {
-        active: {
-            where: {
-                isDeleted: false
-            }
-        }
     }
 });
