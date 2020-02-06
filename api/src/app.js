@@ -1,4 +1,4 @@
-import router from './routes/user';
+import * as router from './routes/index';
 import { db } from './config/database';
 
 const express = require('express');
@@ -11,7 +11,8 @@ db.authenticate()
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(router);
+app.use(router.userRouter);
+app.use(router.groupRouter);
 
 app.listen(PORT, () => {
     console.log(`server started at http://localhost:${PORT}`);

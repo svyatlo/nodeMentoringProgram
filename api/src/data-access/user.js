@@ -3,6 +3,17 @@ import { db } from '../config/database';
 
 const { Op } = require('sequelize');
 
+function findUserIdByLogin(login) {
+    const user = User.scope('active')
+        .findOne({
+            where: {
+                login
+            }
+        });
+
+    return user.id;
+}
+
 function findUsersByLogin(loginSubstring, limit) {
     const users = User.scope('active')
         .findAll({
@@ -11,12 +22,12 @@ function findUsersByLogin(loginSubstring, limit) {
                     [Op.substring]: loginSubstring
                 }
             },
-            limit: limit,
+            limit,
             order: [[db.col('login'), 'ASC']]
         });
 
     return users;
-}    
+}
 
 function findAllUsers() {
     return User.findAll();
@@ -38,7 +49,7 @@ function createUser(user) {
 }
 
 function updateUserById(user) {
-   User.update(user, {
+    User.update(user, {
         where: {
             id: user.id
         }
@@ -47,7 +58,7 @@ function updateUserById(user) {
 
 function deleteUserById(id) {
     User.scope('active')
-        .update({ isDeleted: true, updatedAt: new Date }, {
+        .update({ isDeleted: true, updatedAt: new Date() }, {
             where: {
                 id
             }
@@ -55,6 +66,7 @@ function deleteUserById(id) {
 }
 
 export const DBRequest = {
+    findUserIdByLogin,
     findUsersByLogin,
     findAllUsers,
     findUserById,

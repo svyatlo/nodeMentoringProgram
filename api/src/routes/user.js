@@ -9,7 +9,7 @@ router.route('/users')
     .get((req, res) => {
         controllers.getUsers(req, res);
     })
-    .post(validator.body(schema.objectSchema), (req, res) => {
+    .post(validator.body(schema.userSchema), (req, res) => {
         controllers.postUser(req, res);
     });
 
@@ -19,4 +19,4 @@ router.route('/users/:id')
     .put((req, res) => controllers.updateUserById(req, res))
     .delete((req, res) => controllers.deleteUserById(req, res));
 
-export default router;
+export { router };

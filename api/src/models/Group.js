@@ -16,7 +16,7 @@ export const Group = db.define('group', {
         type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: false
     },
-    
+
     createdAt: {
         type: DataTypes.DATE
     },

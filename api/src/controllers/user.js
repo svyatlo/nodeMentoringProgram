@@ -19,11 +19,10 @@ async function getUsers(req, res) {
         } else {
             res.status(404).send({
                 success: 'false',
-                message: `There aren't any person for this request`
+                message: 'There aren\'t any person for this request'
             });
         }
-    }
-    catch (error) {
+    } catch (error) {
         console.log('Error: ', error);
     }
 }
@@ -37,11 +36,10 @@ async function getUserById(req, res) {
         } else {
             res.status(404).send({
                 success: 'false',
-                message: `User not found`
+                message: 'User not found'
             });
         }
-    }
-    catch (error) {
+    } catch (error) {
         console.log('Error: ', error);
     }
 }
@@ -78,7 +76,7 @@ async function updateUserById(req, res) {
                 isDeleted: req.body.isDeleted || user.isDeleted,
                 createdAt: user.createdAt,
                 updatedAt: new Date()
-            }
+            };
 
             await DBRequest.updateUserById(updatedUser);
 
@@ -89,11 +87,10 @@ async function updateUserById(req, res) {
         } else {
             res.status(404).send({
                 success: 'false',
-                message: `User not found`
+                message: 'User not found'
             });
         }
-    }
-    catch (error) {
+    } catch (error) {
         console.log('Error: ', error);
     }
 }
@@ -112,11 +109,10 @@ async function deleteUserById(req, res) {
         } else {
             res.status(404).send({
                 success: 'false',
-                message: `User not found`
+                message: 'User not found'
             });
         }
-    }
-    catch (error) {
+    } catch (error) {
         console.log('Error: ', error);
     }
 }
