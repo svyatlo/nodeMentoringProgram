@@ -3,24 +3,24 @@ import { db } from '../config/database';
 const { DataTypes } = require('sequelize');
 
 export const User = db.define('user', {
-    id: {
+    user_id: {
         type: DataTypes.UUID,
         allowNull: false,
         primaryKey: true
     },
-    login: {
+    user_login: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    password: {
+    user_password: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    age: {
+    user_age: {
         type: DataTypes.NUMBER,
         allowNull: false
     },
-    isDeleted: {
+    user_isDeleted: {
         type: DataTypes.BOOLEAN,
         allowNull: false
     },
@@ -34,7 +34,7 @@ export const User = db.define('user', {
     scopes: {
         active: {
             where: {
-                isDeleted: false
+                user_isDeleted: false
             }
         }
     }

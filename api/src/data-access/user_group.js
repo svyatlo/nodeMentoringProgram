@@ -1,9 +1,25 @@
-// import { Group } from '../models/Group';
-// import { User } from '../models/User';
 import { UserGroup } from '../models/UserGroup';
+// import { db } from '../config/database';
 
-function addUsersToGroup(object) {
-    UserGroup.bulkCreate(object);
+async function addUsersToGroup(obj) {
+    // const t = await db.transaction();
+    // console.log({
+    //     groupId,
+    //     userId
+    // });
+
+    // try {
+    //     await UserGroup.create({
+    //         groupId,
+    //         userId
+    //     }, { transaction: t });
+
+    //     await t.commit();
+    // } catch (error) {
+    //     await t.rollback();
+    // }
+    console.error('obj: ', obj);
+    await UserGroup.bulkCreate(obj);
 }
 
 export const DBRequest = {

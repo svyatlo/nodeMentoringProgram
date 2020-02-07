@@ -39,18 +39,18 @@ async function getGroupById(req, res) {
 }
 
 async function createGroup(req, res) {
-    const id = uuidv4();
+    const group_id = uuidv4();
     const group = {
-        id,
-        name: req.body.name,
-        permissions: req.body.permissions
+        group_id,
+        group_name: req.body.name,
+        group_permissions: req.body.permissions
     };
 
     await DBRequest.createGroup(group);
 
     return res.status(201).send({
         success: 'true',
-        message: `Group ${req.body.name} created successfully.`
+        message: `Group "${req.body.name}" created successfully.`
     });
 }
 
@@ -60,9 +60,9 @@ async function updateGroupById(req, res) {
 
         if (group) {
             const updatedGroup = {
-                id: req.params.id,
-                name: req.body.name || group.name,
-                permissions: req.body.permissions || group.permissions,
+                group_id: req.params.id,
+                group_name: req.body.name || group.group_name,
+                group_permissions: req.body.permissions || group.group_permissions,
                 createdAt: group.createdAt,
                 updatedAt: new Date()
             };
@@ -71,7 +71,7 @@ async function updateGroupById(req, res) {
 
             res.status(200).send({
                 success: 'true',
-                message: `Group ${updatedGroup.name} updated successfully.`
+                message: `Group '${updatedGroup.group_name}' updated successfully.`
             });
         } else {
             res.status(404).send({

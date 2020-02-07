@@ -3,16 +3,16 @@ import { db } from '../config/database';
 const { DataTypes } = require('sequelize');
 
 export const Group = db.define('group', {
-    id: {
+    group_id: {
         type: DataTypes.UUID,
         allowNull: false,
         primaryKey: true
     },
-    name: {
+    group_name: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    permissions: {
+    group_permissions: {
         type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: false
     },

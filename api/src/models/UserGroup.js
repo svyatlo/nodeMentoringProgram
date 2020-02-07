@@ -2,7 +2,7 @@ import { db } from '../config/database';
 import { User } from './User';
 import { Group } from './Group';
 
-export const UserGroup = db.define('user_group', {});
+export const UserGroup = db.define('user_group', {}, { timestamps: false });
 
-User.belongsToMany(Group, { through: UserGroup });
 Group.belongsToMany(User, { through: UserGroup });
+User.belongsToMany(Group, { through: UserGroup });

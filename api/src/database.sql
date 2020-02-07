@@ -31,8 +31,8 @@ INSERT INTO groups VALUES ('55df56dc-47af-4e53-b9f1-1f65d013ca66','React mentori
 INSERT INTO groups VALUES ('7654c440-8318-48ed-955e-7d7b193eaf09','C# mentoring program','{"READ", "WRITE", "DELETE", "SHARE", "UPLOAD_FILES"}','2020-01-24','2020-01-24');
 INSERT INTO groups VALUES ('4569c440-8318-48ed-955e-7d7b193eaf09','Java mentoring program','{"READ", "WRITE", "DELETE", "SHARE", "UPLOAD_FILES"}','2020-01-24','2020-01-24');
 
-CREATE TABLE user_group (
-  user_id uuid REFERENCES groups (group_id) ON UPDATE CASCADE
-, group_id uuid REFERENCES users (user_id) ON UPDATE CASCADE
-, CONSTRAINT user_group_pkey PRIMARY KEY (group_id, user_id)
+CREATE TABLE user_groups (
+  groupGroupId uuid REFERENCES groups (group_id) ON UPDATE CASCADE
+, userUserId uuid REFERENCES users (user_id) ON UPDATE CASCADE
+, CONSTRAINT user_group_pkey PRIMARY KEY (groupGroupId, userUserId)
 );

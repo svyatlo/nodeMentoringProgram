@@ -4,10 +4,10 @@ function findAllGroups() {
     return Group.findAll();
 }
 
-function findGroupById(id) {
+function findGroupById(group_id) {
     const group = Group.findOne({
         where: {
-            id
+            group_id
         }
     });
 
@@ -21,27 +21,17 @@ function createGroup(group) {
 function updateGroupById(group) {
     Group.update(group, {
         where: {
-            id: group.id
+            group_id: group.group_id
         }
     });
 }
 
-function deleteGroupById(id) {
+function deleteGroupById(group_id) {
     Group.destroy({
         where: {
-            id
+            group_id
         }
     });
-}
-
-function findGroupIdByName(name) {
-    const groupId = Group.findOne({
-        where: {
-            name
-        }
-    });
-
-    return groupId;
 }
 
 export const DBRequest = {
@@ -49,6 +39,5 @@ export const DBRequest = {
     findGroupById,
     updateGroupById,
     createGroup,
-    deleteGroupById,
-    findGroupIdByName
+    deleteGroupById
 };

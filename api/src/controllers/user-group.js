@@ -1,27 +1,16 @@
 import { DBRequest } from '../data-access/user_group';
-import { DBRequest as userDBRequest } from '../data-access/user';
-import { DBRequest as groupDBRequest } from '../data-access/group';
+// import { DBRequest as userDBRequest } from '../data-access/user';
+// import { DBRequest as groupDBRequest } from '../data-access/group';
 
 async function addUsersToGroup(req, res) {
+    const groupId = req.body.groupId;
+    const userIds = req.body.userIds;
+    console.log('groupId: ', groupId, ', userIds: ', userIds);
+
     const usersBelongToGroup = [];
-    const userIds = [];
-    const groupName = req.body.groupName;
-    const userLogins = req.body.userLogins;
 
-    userLogins.forEach(async (userLogin) => {
-        const userId = await userDBRequest.findUserIdByLogin(userLogin);
-        userIds.push(userId);
-    });
-
-    const groupId = await groupDBRequest.findGroupIdByName(groupName);
-
-    userIds.forEach(userId => {
-        const userToGroup = {
-            groupId,
-            userId
-        };
-        usersBelongToGroup.push(userToGroup);
-    });
+    userIds.forEach(userId => usersBelongToGroup.push({ groupGroupId: groupId, userUserId: userId }));
+    console.log('usersBelongToGroup: ', usersBelongToGroup);
 
     try {
         await DBRequest.addUsersToGroup(usersBelongToGroup);

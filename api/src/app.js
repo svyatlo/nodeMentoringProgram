@@ -13,8 +13,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(router.userRouter);
 app.use(router.groupRouter);
+app.use(router.userGroupRouter);
 
 app.listen(PORT, () => {
     console.log(`server started at http://localhost:${PORT}`);
 });
-
