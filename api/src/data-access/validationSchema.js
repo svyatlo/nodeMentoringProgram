@@ -16,8 +16,6 @@ const groupSchema = Joi.object({
     permissions: Joi.array().items(Joi.string()).required()
 });
 
-// const arraySchema = Joi.array().items(idSchema.concat(userSchema));
-
 export const schema = {
     idSchema,
     userSchema,
