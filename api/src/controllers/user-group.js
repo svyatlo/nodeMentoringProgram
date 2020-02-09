@@ -1,24 +1,21 @@
 import { DBRequest } from '../data-access/user_group';
-// import { DBRequest as userDBRequest } from '../data-access/user';
-// import { DBRequest as groupDBRequest } from '../data-access/group';
 
 async function addUsersToGroup(req, res) {
-    const groupId = req.body.groupId;
-    const userIds = req.body.userIds;
-    console.log('groupId: ', groupId, ', userIds: ', userIds);
-
-    const usersBelongToGroup = [];
-
-    userIds.forEach(userId => usersBelongToGroup.push({ groupGroupId: groupId, userUserId: userId }));
-    console.log('usersBelongToGroup: ', usersBelongToGroup);
-
     try {
-        await DBRequest.addUsersToGroup(usersBelongToGroup);
+        const transactionResult = await DBRequest.addUsersToGroup(req.body.groupId, req.body.userIds);
 
-        return res.status(201).send({
-            success: 'true',
-            message: 'Users were added to group successfully.'
-        });
+        if (transactionResult) {
+            return res.status(201).send({
+                success: true,
+                message: 'User(s) were added to group successfully.'
+            });
+        } else {
+            return res.status(404).send({
+                success: false,
+                message: 'Transaction was cancelled. Please check if user is already included into group.'
+            });
+        }
+        
     } catch (error) {
         console.log('Error: ', error);
     }

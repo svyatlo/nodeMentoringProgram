@@ -1,25 +1,20 @@
 import { UserGroup } from '../models/UserGroup';
-// import { db } from '../config/database';
+import { db } from '../config/database';
 
-async function addUsersToGroup(obj) {
-    // const t = await db.transaction();
-    // console.log({
-    //     groupId,
-    //     userId
-    // });
+async function addUsersToGroup(groupId, userIds) {
+    const t = await db.transaction();
 
-    // try {
-    //     await UserGroup.create({
-    //         groupId,
-    //         userId
-    //     }, { transaction: t });
+    try {
+        const transactions = userIds.map(async (userId) => {
+            await UserGroup.create({ group_id: groupId, user_id: userId }, { transaction: t });
+        });
 
-    //     await t.commit();
-    // } catch (error) {
-    //     await t.rollback();
-    // }
-    console.error('obj: ', obj);
-    await UserGroup.bulkCreate(obj);
+        await Promise.all(transactions);
+        await t.commit();
+        return true;
+    } catch (error) {
+        await t.rollback();
+    }
 }
 
 export const DBRequest = {

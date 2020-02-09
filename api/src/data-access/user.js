@@ -7,6 +7,9 @@ const { Op } = require('sequelize');
 function findUsersByLogin(loginSubstring, limit) {
     const users = User.scope('active')
         .findAll({
+            include: {
+                model: Group
+            },
             where: {
                 user_login: {
                     [Op.substring]: loginSubstring
@@ -30,6 +33,9 @@ function findAllUsers() {
 function findUserById(user_id) {
     const user = User.scope('active')
         .findOne({
+            include: {
+                model: Group
+            },
             where: {
                 user_id
             }

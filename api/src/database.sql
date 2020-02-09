@@ -32,7 +32,15 @@ INSERT INTO groups VALUES ('7654c440-8318-48ed-955e-7d7b193eaf09','C# mentoring 
 INSERT INTO groups VALUES ('4569c440-8318-48ed-955e-7d7b193eaf09','Java mentoring program','{"READ", "WRITE", "DELETE", "SHARE", "UPLOAD_FILES"}','2020-01-24','2020-01-24');
 
 CREATE TABLE user_groups (
-  groupGroupId uuid REFERENCES groups (group_id) ON UPDATE CASCADE
-, userUserId uuid REFERENCES users (user_id) ON UPDATE CASCADE
-, CONSTRAINT user_group_pkey PRIMARY KEY (groupGroupId, userUserId)
+  group_id uuid REFERENCES groups (group_id) ON UPDATE CASCADE
+, user_id uuid REFERENCES users (user_id) ON UPDATE CASCADE
+, CONSTRAINT user_group_pkey PRIMARY KEY (group_id, user_id)
+);
+
+CREATE TABLE user_groups (
+group_id uuid NOT NULL,
+user_id uuid NOT NULL,
+FOREIGN KEY (group_id) REFERENCES groups(group_id) ON UPDATE CASCADE ON DELETE CASCADE,
+FOREIGN KEY (user_id) REFERENCES users(user_id) ON UPDATE CASCADE ON DELETE CASCADE,
+CONSTRAINT user_group_pkey PRIMARY KEY (group_id, user_id)
 );

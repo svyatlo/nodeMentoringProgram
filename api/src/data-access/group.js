@@ -1,11 +1,19 @@
 import { Group } from '../models/Group';
+import { User } from '../models/User';
 
 function findAllGroups() {
-    return Group.findAll();
+    return Group.findAll({
+        include: {
+            model: User
+        }
+    });
 }
 
 function findGroupById(group_id) {
     const group = Group.findOne({
+        include: {
+            model: User
+        },
         where: {
             group_id
         }

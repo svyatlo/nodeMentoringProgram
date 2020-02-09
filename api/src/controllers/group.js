@@ -50,7 +50,7 @@ async function createGroup(req, res) {
 
     return res.status(201).send({
         success: 'true',
-        message: `Group "${req.body.name}" created successfully.`
+        message: `Group '${req.body.name}' created successfully.`
     });
 }
 
