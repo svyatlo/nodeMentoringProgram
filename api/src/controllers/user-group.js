@@ -9,13 +9,11 @@ async function addUsersToGroup(req, res) {
                 success: true,
                 message: 'User(s) were added to group successfully.'
             });
-        } else {
-            return res.status(404).send({
-                success: false,
-                message: 'Transaction was cancelled. Please check if user is already included into group.'
-            });
         }
-        
+        return res.status(404).send({
+            success: false,
+            message: 'Transaction was cancelled. Please check if user is already included into group.'
+        });
     } catch (error) {
         console.log('Error: ', error);
     }
