@@ -19,11 +19,10 @@ async function getUsers(req, res) {
         } else {
             res.status(404).send({
                 success: 'false',
-                message: `There aren't any person for this request`
+                message: 'There aren\'t any person for this request'
             });
         }
-    }
-    catch (error) {
+    } catch (error) {
         console.log('Error: ', error);
     }
 }
@@ -37,23 +36,22 @@ async function getUserById(req, res) {
         } else {
             res.status(404).send({
                 success: 'false',
-                message: `User not found`
+                message: 'User not found'
             });
         }
-    }
-    catch (error) {
+    } catch (error) {
         console.log('Error: ', error);
     }
 }
 
 async function postUser(req, res) {
-    const id = uuidv4();
+    const user_id = uuidv4();
     const user = {
-        id,
-        login: req.body.login,
-        password: req.body.password,
-        age: req.body.age,
-        isDeleted: req.body.isDeleted
+        user_id,
+        user_login: req.body.login,
+        user_password: req.body.password,
+        user_age: req.body.age,
+        user_isDeleted: req.body.isDeleted
     };
 
     await DBRequest.createUser(user);
@@ -71,14 +69,14 @@ async function updateUserById(req, res) {
 
         if (user) {
             const updatedUser = {
-                id: req.params.id,
-                login: req.body.login || user.login,
-                password: req.body.password || user.password,
-                age: req.body.age || user.age,
-                isDeleted: req.body.isDeleted || user.isDeleted,
+                user_id: req.params.id,
+                user_login: req.body.login || user.user_login,
+                user_password: req.body.password || user.user_password,
+                user_age: req.body.age || user.user_age,
+                user_isDeleted: req.body.isDeleted || user.user_isDeleted,
                 createdAt: user.createdAt,
                 updatedAt: new Date()
-            }
+            };
 
             await DBRequest.updateUserById(updatedUser);
 
@@ -89,11 +87,10 @@ async function updateUserById(req, res) {
         } else {
             res.status(404).send({
                 success: 'false',
-                message: `User not found`
+                message: 'User not found'
             });
         }
-    }
-    catch (error) {
+    } catch (error) {
         console.log('Error: ', error);
     }
 }
@@ -112,11 +109,10 @@ async function deleteUserById(req, res) {
         } else {
             res.status(404).send({
                 success: 'false',
-                message: `User not found`
+                message: 'User not found'
             });
         }
-    }
-    catch (error) {
+    } catch (error) {
         console.log('Error: ', error);
     }
 }

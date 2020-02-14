@@ -1,32 +1,43 @@
 import { User } from '../models/User';
 import { db } from '../config/database';
+import { Group } from '../models/Group';
 
 const { Op } = require('sequelize');
 
 function findUsersByLogin(loginSubstring, limit) {
     const users = User.scope('active')
         .findAll({
+            include: {
+                model: Group
+            },
             where: {
-                login: {
+                user_login: {
                     [Op.substring]: loginSubstring
                 }
             },
-            limit: limit,
-            order: [[db.col('login'), 'ASC']]
+            limit,
+            order: [[db.col('user_login'), 'ASC']]
         });
 
     return users;
-}    
-
-function findAllUsers() {
-    return User.findAll();
 }
 
-function findUserById(id) {
+function findAllUsers() {
+    return User.findAll({
+        include: {
+            model: Group
+        }
+    });
+}
+
+function findUserById(user_id) {
     const user = User.scope('active')
         .findOne({
+            include: {
+                model: Group
+            },
             where: {
-                id
+                user_id
             }
         });
 
@@ -38,18 +49,18 @@ function createUser(user) {
 }
 
 function updateUserById(user) {
-   User.update(user, {
+    User.update(user, {
         where: {
-            id: user.id
+            user_id: user.user_id
         }
     });
 }
 
-function deleteUserById(id) {
+function deleteUserById(user_id) {
     User.scope('active')
-        .update({ isDeleted: true, updatedAt: new Date }, {
+        .update({ user_isDeleted: true, updatedAt: new Date() }, {
             where: {
-                id
+                user_id
             }
         });
 }
