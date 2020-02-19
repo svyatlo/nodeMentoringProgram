@@ -44,25 +44,53 @@ function findUserById(user_id) {
     return user;
 }
 
-function createUser(user) {
-    User.create(user);
+async function createUser(user) {
+    const t = await db.transaction();
+    try {
+        await User.create(user, { transaction: t });
+        await t.commit();
+
+        return user;
+    } catch (error) {
+        await t.rollback();
+    }
 }
 
-function updateUserById(user) {
-    User.update(user, {
-        where: {
-            user_id: user.user_id
-        }
-    });
-}
+async function updateUserById(user) {
+    const t = await db.transaction();
 
-function deleteUserById(user_id) {
-    User.scope('active')
-        .update({ user_isDeleted: true, updatedAt: new Date() }, {
+    try {
+        await User.update(user, {
             where: {
-                user_id
-            }
+                user_id: user.user_id
+            },
+            transaction: t
         });
+        await t.commit();
+
+        return user;
+    } catch (error) {
+        await t.rollback();
+    }
+}
+
+async function deleteUserById(user_id) {
+    const t = await db.transaction();
+
+    try {
+        await User.scope('active')
+            .update({ user_isDeleted: true, updatedAt: new Date() }, {
+                where: {
+                    user_id
+                },
+                transaction: t
+            });
+        await t.commit();
+
+        return true;
+    } catch (error) {
+        await t.rollback();
+    }
 }
 
 export const DBRequest = {

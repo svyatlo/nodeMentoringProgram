@@ -1,7 +1,17 @@
 import uuidv4 from 'uuid/v4';
 import { DBRequest } from '../data-access/user';
+import { logger } from '../config/logger';
+import { createLogRequestLine } from '../utils/create-log-request-line';
+import { message } from '../config/constants';
 
 async function getUsers(req, res) {
+    const requestArguments = {
+        loginSubstring: req.query.loginSubstring,
+        limit: req.query.limit
+    };
+
+    const method = 'getUsers';
+    const queryParameters = createLogRequestLine(requestArguments);
     let users = [];
 
     try {
@@ -11,36 +21,40 @@ async function getUsers(req, res) {
             users = await DBRequest.findAllUsers();
         }
 
-        if (users.length) {
-            res.status(200).send({
-                success: 'true',
-                users
-            });
-        } else {
-            res.status(404).send({
-                success: 'false',
-                message: 'There aren\'t any person for this request'
-            });
+        if (!users.length) {
+            logger.error({ method, queryParameters, message: message.anyNotFound });
+            return res.sendStatus(404);
         }
+
+        res.status(200).send(users);
+        logger.info({ method, queryParameters, message: message.success });
     } catch (error) {
-        console.log('Error: ', error);
+        res.sendStatus(500);
+        logger.error({ method, message: `${error}` });
     }
 }
 
 async function getUserById(req, res) {
+    const requestArguments = {
+        id: req.params.id
+    };
+
+    const method = 'getUserById';
+    const queryParameters = createLogRequestLine(requestArguments);
+
     try {
         const user = await DBRequest.findUserById(req.params.id);
 
-        if (user) {
-            res.status(200).send(user);
-        } else {
-            res.status(404).send({
-                success: 'false',
-                message: 'User not found'
-            });
+        if (!user) {
+            logger.error({ method, queryParameters, message: message.anyNotFound });
+            return res.sendStatus(404);
         }
+
+        res.status(200).send(user);
+        logger.info({ method, queryParameters, message: message.success });
     } catch (error) {
-        console.log('Error: ', error);
+        res.sendStatus(500);
+        logger.error({ method, message: `${error}` });
     }
 }
 
@@ -54,66 +68,95 @@ async function postUser(req, res) {
         user_isDeleted: req.body.isDeleted
     };
 
-    await DBRequest.createUser(user);
+    const method = 'postUser';
+    const queryParameters = createLogRequestLine(user);
 
-    return res.status(201).send({
-        success: 'true',
-        message: 'User added successfully',
-        user
-    });
+    try {
+        const postResult = await DBRequest.createUser(user);
+
+        if (!postResult) {
+            logger.error({ method, queryParameters, message: message.transactionFailed });
+            return res.status(400).send(message.transactionFailed);
+        }
+
+        res.status(201).send(user);
+        logger.info({ method, queryParameters, message: message.success });
+    } catch (error) {
+        res.sendStatus(500);
+        logger.error({ method, message: `${error}` });
+    }
 }
 
 async function updateUserById(req, res) {
+    const requestArguments = {
+        id: req.params.id
+    };
+
+    const method = 'updateUserById';
+    const queryParameters = createLogRequestLine(requestArguments);
+
     try {
         const user = await DBRequest.findUserById(req.params.id);
 
-        if (user) {
-            const updatedUser = {
-                user_id: req.params.id,
-                user_login: req.body.login || user.user_login,
-                user_password: req.body.password || user.user_password,
-                user_age: req.body.age || user.user_age,
-                user_isDeleted: req.body.isDeleted || user.user_isDeleted,
-                createdAt: user.createdAt,
-                updatedAt: new Date()
-            };
-
-            await DBRequest.updateUserById(updatedUser);
-
-            res.status(200).send({
-                success: 'true',
-                message: 'User updated successfully'
-            });
-        } else {
-            res.status(404).send({
-                success: 'false',
-                message: 'User not found'
-            });
+        if (!user) {
+            logger.error({ method, queryParameters, message: message.anyNotFound });
+            return res.sendStatus(404);
         }
+
+        const updatedUser = {
+            user_id: req.params.id,
+            user_login: req.body.login || user.user_login,
+            user_password: req.body.password || user.user_password,
+            user_age: req.body.age || user.user_age,
+            user_isDeleted: req.body.isDeleted || user.user_isDeleted,
+            createdAt: user.createdAt,
+            updatedAt: new Date()
+        };
+
+        const updatedQueryParameters = createLogRequestLine(updatedUser);
+        const updateResult = await DBRequest.updateUserById(updatedUser);
+
+        if (!updateResult) {
+            logger.error({ method, queryParameters: updatedQueryParameters, message: message.transactionFailed });
+            return res.status(400).send(message.failedUpdate);
+        }
+
+        res.status(200).send(message.successUpdate);
+        logger.info({ method, queryParameters: updatedQueryParameters, message: message.successUpdate });
     } catch (error) {
-        console.log('Error: ', error);
+        res.sendStatus(500);
+        logger.error({ method, message: `${error}` });
     }
 }
 
 async function deleteUserById(req, res) {
+    const requestArguments = {
+        id: req.params.id
+    };
+
+    const method = 'deleteUserById';
+    const queryParameters = createLogRequestLine(requestArguments);
+
     try {
         const user = await DBRequest.findUserById(req.params.id);
 
-        if (user) {
-            await DBRequest.deleteUserById(req.params.id);
-
-            res.status(200).send({
-                success: 'true',
-                message: 'User deleted successfully'
-            });
-        } else {
-            res.status(404).send({
-                success: 'false',
-                message: 'User not found'
-            });
+        if (!user) {
+            logger.error({ method, queryParameters, message: message.anyNotFound });
+            return res.sendStatus(404);
         }
+
+        const deleteResult = await DBRequest.deleteUserById(req.params.id);
+
+        if (!deleteResult) {
+            logger.error({ method, queryParameters, message: message.transactionFailed });
+            return res.status(400).send(message.failedRemove);
+        }
+
+        res.status(200).send(message.successRemove);
+        logger.info({ method, queryParameters, message: message.success });
     } catch (error) {
-        console.log('Error: ', error);
+        res.sendStatus(500);
+        logger.error({ method, message: `${error}` });
     }
 }
 
