@@ -1,6 +1,6 @@
-import { User } from '../models/User';
+import { User } from '../models/user';
 import { db } from '../config/database';
-import { Group } from '../models/Group';
+import { Group } from '../models/group';
 
 const { Op } = require('sequelize');
 
