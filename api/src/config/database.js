@@ -11,5 +11,3 @@ export const db = new Sequelize('nodeMP', 'postgres', '123456', {
         idle: 10000
     }
 });
-
-// const sequelize = new Sequelize('postgres://postgres:123456@127.0.0.1:5432/nodeMP');

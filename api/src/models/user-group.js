@@ -1,6 +1,6 @@
 import { db } from '../config/database';
-import { User } from './User';
-import { Group } from './Group';
+import { User } from './user';
+import { Group } from './group';
 
 export const UserGroup = db.define('user_group', {}, { timestamps: false });
 

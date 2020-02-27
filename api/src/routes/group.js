@@ -17,6 +17,7 @@ router.route('/groups/:id')
     .all(validator.params(schema.idSchema), (req, res, next) => next())
     .get((req, res) => controllers.getGroupById(req, res))
     .put((req, res) => controllers.updateGroupById(req, res))
-    .delete((req, res) => controllers.deleteGroupById(req, res));
+    .delete((req, res) => controllers.deleteGroupById(req, res))
+    .post((req, res) => controllers.addUsersToGroup(req, res));
 
 export { router };
