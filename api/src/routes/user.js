@@ -1,12 +1,13 @@
 import { controllers } from '../controllers/user';
-import { schema } from '../data-access/validationSchema';
+import { schema } from '../middleware/validation-schema';
+import { checkToken } from '../middleware/check-token';
 
 const express = require('express');
 const router = express.Router();
 const validator = require('express-joi-validation').createValidator({});
 
 router.route('/users')
-    .get((req, res) => {
+    .get(checkToken, (req, res) => {
         controllers.getUsers(req, res);
     })
     .post(validator.body(schema.userSchema), (req, res) => {

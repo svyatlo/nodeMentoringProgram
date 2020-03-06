@@ -4,7 +4,7 @@ import { Group } from '../models/group';
 
 const { Op } = require('sequelize');
 
-function findUsersByLogin(loginSubstring, limit) {
+function findUsersBySubstring(loginSubstring, limit) {
     const users = User.scope('active')
         .findAll({
             include: {
@@ -38,6 +38,17 @@ function findUserById(user_id) {
             },
             where: {
                 user_id
+            }
+        });
+
+    return user;
+}
+
+function findUserByLogin(user_login) {
+    const user = User.scope('active')
+        .findOne({
+            where: {
+                user_login
             }
         });
 
@@ -94,9 +105,10 @@ async function deleteUserById(user_id) {
 }
 
 export const DBRequest = {
-    findUsersByLogin,
+    findUsersBySubstring,
     findAllUsers,
     findUserById,
+    findUserByLogin,
     updateUserById,
     createUser,
     deleteUserById

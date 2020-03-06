@@ -16,7 +16,7 @@ async function getUsers(req, res) {
 
     try {
         if (req.query.loginSubstring && req.query.limit) {
-            users = await DBRequest.findUsersByLogin(req.query.loginSubstring, req.query.limit);
+            users = await DBRequest.findUsersBySubstring(req.query.loginSubstring, req.query.limit);
         } else {
             users = await DBRequest.findAllUsers();
         }
