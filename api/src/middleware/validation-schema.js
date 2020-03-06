@@ -16,8 +16,14 @@ const groupSchema = Joi.object({
     permissions: Joi.array().items(Joi.string()).required()
 });
 
+const authenticateSchema = Joi.object({
+    login: Joi.string().required(),
+    password: Joi.string().pattern(new RegExp('[a-zA-Z0-9]')).required()
+});
+
 export const schema = {
     idSchema,
     userSchema,
-    groupSchema
+    groupSchema,
+    authenticateSchema
 };
