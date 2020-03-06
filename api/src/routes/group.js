@@ -1,5 +1,5 @@
 import { controllers } from '../controllers/group';
-import { schema } from '../data-access/validationSchema';
+import { schema } from '../middleware/validation-schema';
 
 const express = require('express');
 const router = express.Router();
