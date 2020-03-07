@@ -10,12 +10,12 @@ router.route('/users')
     .get(checkToken, (req, res) => {
         controllers.getUsers(req, res);
     })
-    .post(validator.body(schema.userSchema), (req, res) => {
+    .post(checkToken, validator.body(schema.userSchema), (req, res) => {
         controllers.postUser(req, res);
     });
 
 router.route('/users/:id')
-    .all(validator.params(schema.idSchema), (req, res, next) => next())
+    .all(checkToken, validator.params(schema.idSchema), (req, res, next) => next())
     .get((req, res) => controllers.getUserById(req, res))
     .put((req, res) => controllers.updateUserById(req, res))
     .delete((req, res) => controllers.deleteUserById(req, res));

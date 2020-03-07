@@ -7,7 +7,12 @@ export const message = {
     failedRemove: 'Deletion failed',
     successRemove: 'Deleted successfully',
     invalidLoginPassword: 'Invalid username or password',
-    validLoginPassword: 'User\'s authentication saccessful'
+    validLoginPassword: 'User\'s authentication saccessful',
+    decoded: 'Decoded',
+    invalidHeader: 'Wrong header'
 };
 
-export const tokenHeader = 'x-access-token';
+export const authenticate = {
+    tokenHeader: 'x-access-token',
+    secretWord: 'Secret string for Node.js mentoring program'
+}
