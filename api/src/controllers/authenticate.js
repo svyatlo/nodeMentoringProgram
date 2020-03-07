@@ -1,6 +1,6 @@
 import { DBRequest } from '../data-access/user';
 import { logger } from '../config/logger';
-import { createLogLine } from '../utils/create-log-request-line';
+import { createLogLine } from '../utils/create-log-line';
 import { message, authenticate } from '../config/constants';
 import jwt from 'jsonwebtoken';
 

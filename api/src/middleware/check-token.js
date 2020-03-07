@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { authenticate, message } from '../config/constants';
 import { logger } from '../config/logger';
-import { createLogLine } from '../utils/create-log-request-line';
+import { createLogLine } from '../utils/create-log-line';
 
 export function checkToken(req, res, next) {
     const method = 'checkToken';

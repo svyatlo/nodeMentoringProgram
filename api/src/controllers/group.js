@@ -1,7 +1,7 @@
 import uuidv4 from 'uuid/v4';
 import { DBRequest } from '../data-access/group';
 import { logger } from '../config/logger';
-import { createLogLine } from '../utils/create-log-request-line';
+import { createLogLine } from '../utils/create-log-line';
 import { message } from '../config/constants';
 
 async function getAllGroups(req, res) {
