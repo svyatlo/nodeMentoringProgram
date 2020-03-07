@@ -1,5 +1,6 @@
 import { router } from './routes/index';
 import { db } from './config/database';
+import cors from 'cors';
 
 const express = require('express');
 const app = express();
@@ -9,6 +10,7 @@ db.authenticate()
     .then(() => console.log('Database connected...'))
     .catch(err => console.error('Unable to connect to the database: ', err));
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(router.userRouter);
