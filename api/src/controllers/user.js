@@ -1,7 +1,7 @@
 import uuidv4 from 'uuid/v4';
 import { DBRequest } from '../data-access/user';
 import { logger } from '../config/logger';
-import { createLogRequestLine } from '../utils/create-log-request-line';
+import { createLogLine } from '../utils/create-log-request-line';
 import { message } from '../config/constants';
 
 async function getUsers(req, res) {
@@ -11,7 +11,7 @@ async function getUsers(req, res) {
     };
 
     const method = 'getUsers';
-    const queryParameters = createLogRequestLine(requestArguments);
+    const parameters = createLogLine(requestArguments);
     let users = [];
 
     try {
@@ -22,12 +22,12 @@ async function getUsers(req, res) {
         }
 
         if (!users.length) {
-            logger.error({ method, queryParameters, message: message.anyNotFound });
+            logger.error({ method, parameters, message: message.anyNotFound });
             return res.sendStatus(404);
         }
 
         res.status(200).send(users);
-        logger.info({ method, queryParameters, message: message.success });
+        logger.info({ method, parameters, message: message.success });
     } catch (error) {
         res.sendStatus(500);
         logger.error({ method, message: `${error}` });
@@ -40,18 +40,18 @@ async function getUserById(req, res) {
     };
 
     const method = 'getUserById';
-    const queryParameters = createLogRequestLine(requestArguments);
+    const parameters = createLogLine(requestArguments);
 
     try {
         const user = await DBRequest.findUserById(req.params.id);
 
         if (!user) {
-            logger.error({ method, queryParameters, message: message.anyNotFound });
+            logger.error({ method, parameters, message: message.anyNotFound });
             return res.sendStatus(404);
         }
 
         res.status(200).send(user);
-        logger.info({ method, queryParameters, message: message.success });
+        logger.info({ method, parameters, message: message.success });
     } catch (error) {
         res.sendStatus(500);
         logger.error({ method, message: `${error}` });
@@ -69,18 +69,18 @@ async function postUser(req, res) {
     };
 
     const method = 'postUser';
-    const queryParameters = createLogRequestLine(user);
+    const parameters = createLogLine(user);
 
     try {
         const postResult = await DBRequest.createUser(user);
 
         if (!postResult) {
-            logger.error({ method, queryParameters, message: message.transactionFailed });
+            logger.error({ method, parameters, message: message.transactionFailed });
             return res.status(400).send(message.transactionFailed);
         }
 
         res.status(201).send(user);
-        logger.info({ method, queryParameters, message: message.success });
+        logger.info({ method, parameters, message: message.success });
     } catch (error) {
         res.sendStatus(500);
         logger.error({ method, message: `${error}` });
@@ -93,13 +93,13 @@ async function updateUserById(req, res) {
     };
 
     const method = 'updateUserById';
-    const queryParameters = createLogRequestLine(requestArguments);
+    const parameters = createLogLine(requestArguments);
 
     try {
         const user = await DBRequest.findUserById(req.params.id);
 
         if (!user) {
-            logger.error({ method, queryParameters, message: message.anyNotFound });
+            logger.error({ method, parameters, message: message.anyNotFound });
             return res.sendStatus(404);
         }
 
@@ -113,16 +113,16 @@ async function updateUserById(req, res) {
             updatedAt: new Date()
         };
 
-        const updatedQueryParameters = createLogRequestLine(updatedUser);
+        const updatedparameters = createLogLine(updatedUser);
         const updateResult = await DBRequest.updateUserById(updatedUser);
 
         if (!updateResult) {
-            logger.error({ method, queryParameters: updatedQueryParameters, message: message.transactionFailed });
+            logger.error({ method, parameters: updatedparameters, message: message.transactionFailed });
             return res.status(400).send(message.failedUpdate);
         }
 
         res.status(200).send(message.successUpdate);
-        logger.info({ method, queryParameters: updatedQueryParameters, message: message.successUpdate });
+        logger.info({ method, parameters: updatedparameters, message: message.successUpdate });
     } catch (error) {
         res.sendStatus(500);
         logger.error({ method, message: `${error}` });
@@ -135,25 +135,25 @@ async function deleteUserById(req, res) {
     };
 
     const method = 'deleteUserById';
-    const queryParameters = createLogRequestLine(requestArguments);
+    const parameters = createLogLine(requestArguments);
 
     try {
         const user = await DBRequest.findUserById(req.params.id);
 
         if (!user) {
-            logger.error({ method, queryParameters, message: message.anyNotFound });
+            logger.error({ method, parameters, message: message.anyNotFound });
             return res.sendStatus(404);
         }
 
         const deleteResult = await DBRequest.deleteUserById(req.params.id);
 
         if (!deleteResult) {
-            logger.error({ method, queryParameters, message: message.transactionFailed });
+            logger.error({ method, parameters, message: message.transactionFailed });
             return res.status(400).send(message.failedRemove);
         }
 
         res.status(200).send(message.successRemove);
-        logger.info({ method, queryParameters, message: message.success });
+        logger.info({ method, parameters, message: message.success });
     } catch (error) {
         res.sendStatus(500);
         logger.error({ method, message: `${error}` });

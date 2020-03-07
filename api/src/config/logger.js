@@ -4,7 +4,7 @@ const { combine, timestamp, printf } = format;
 
 const logFormat = printf(info => {
     let logLine = `${info.timestamp} [${info.level}] Method '${info.method}'. ${info.message}. `;
-    logLine += info.queryParameters ? `Parameters: ${info.queryParameters}.` : '';
+    logLine += info.parameters ? `Parameters: ${info.parameters}.` : '';
 
     return logLine;
 });
