@@ -20,3 +20,8 @@ app.use(router.authenticateRouter);
 app.listen(PORT, () => {
     console.log(`server started at http://localhost:${PORT}`);
 });
+
+process.on('uncaughtException', (error) => {
+    console.error('There was an uncaught error', error);
+    process.exit(1);
+})
