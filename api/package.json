@@ -5,8 +5,14 @@
   "main": "index.js",
   "scripts": {
     "lint": "./node_modules/.bin/eslint src/**/*.js --fix",
-    "start": "nodemon --exec babel-node src/app.js",
-    "compile": "babel src --out-dir .compiled --source-maps --watch"
+    "start": "nodemon --exec babel-node -r dotenv/config src/app.js",
+    "compile": "babel src --out-dir .compiled --source-maps --watch",
+    "test": "jest test"
+  },
+  "jest": {
+    "clearMocks": true,
+    "resetMocks": true,
+    "resetModules": true
   },
   "repository": {
     "type": "git",
@@ -23,14 +29,17 @@
     "@babel/cli": "^7.7.4",
     "@babel/core": "^7.7.4",
     "@babel/node": "^7.7.4",
+    "@babel/plugin-transform-runtime": "^7.9.0",
     "@babel/preset-env": "^7.7.4",
     "babel-eslint": "^10.0.3",
     "eslint": "^6.7.2",
+    "jest": "^25.1.0",
     "nodemon": "^1.19.4"
   },
   "dependencies": {
     "@hapi/joi": "^16.1.8",
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-joi-validation": "^4.0.3",
     "jsonwebtoken": "^8.5.1",
