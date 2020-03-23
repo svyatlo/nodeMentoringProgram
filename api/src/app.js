@@ -4,7 +4,7 @@ import cors from 'cors';
 
 const express = require('express');
 const app = express();
-const PORT = process.env.PORT || 5858;
+const PORT = process.env.PORT || 3333;
 
 db.authenticate()
     .then(() => console.log('Database connected...'))
