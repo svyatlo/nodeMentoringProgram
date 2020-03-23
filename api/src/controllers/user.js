@@ -21,7 +21,7 @@ async function getUsers(req, res) {
             users = await DBRequest.findAllUsers();
         }
 
-        if (!users.length) {
+        if (!users?.length) {
             logger.error({ method, parameters, message: message.anyNotFound });
             return res.sendStatus(404);
         }

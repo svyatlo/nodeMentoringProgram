@@ -10,7 +10,7 @@ async function getAllGroups(req, res) {
     try {
         const groups = await DBRequest.findAllGroups();
 
-        if (!groups.length) {
+        if (!groups?.length) {
             logger.error({ method, message: message.anyNotFound });
             return res.sendStatus(404);
         }
@@ -51,7 +51,7 @@ async function createGroup(req, res) {
     const group_id = uuidv4();
     const group = {
         group_id,
-        group_name: req.body.name,
+        group_name: req.body.groupName,
         group_permissions: req.body.permissions
     };
 
@@ -92,7 +92,7 @@ async function updateGroupById(req, res) {
 
         const updatedGroup = {
             group_id: req.params.id,
-            group_name: req.body.name || group.group_name,
+            group_name: req.body.groupName || group.group_name,
             group_permissions: req.body.permissions || group.group_permissions,
             createdAt: group.createdAt,
             updatedAt: new Date()
@@ -162,7 +162,7 @@ async function addUsersToGroup(req, res) {
             return res.sendStatus(404);
         }
 
-        res.status(201).send({ message: message.success });
+        res.status(201).send(message.success);
         logger.info({ method, parameters, message: message.success });
     } catch (error) {
         res.sendStatus(500);
